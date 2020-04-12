@@ -1,9 +1,13 @@
 package com.example.ejercicio_01;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -11,14 +15,16 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<String> mDataSet;
+    private boolean image;
     private ItemClickListener mClickListener;
 
     /**
      * Constructor al que le pasamos como parámetro los datos
      * @param mDataSet
      */
-    public MyAdapter(ArrayList<String> mDataSet) {
+    public MyAdapter(ArrayList<String> mDataSet, boolean image) {
         this.mDataSet = mDataSet;
+        this.image = image;
     }
 
     /**
@@ -45,7 +51,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-        holder.textView.setText(mDataSet.get(position));
+        holder.textView.setText(mDataSet.get(position) + " " + image);
+        if(image){
+            holder.imageView.setImageResource(R.drawable.ic_add_circle_outline_black_24dp);
+        }else{
+            holder.imageView.setImageResource(R.drawable.ic_remove_circle_black_24dp);
+        }
+
     }
 
     @Override
@@ -63,11 +75,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      */
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
+        ImageView imageView;
 
         public MyViewHolder(View v) {
             super(v);
             // Debemos tener acceso a las vistas a través de la vista que nos llega (LinearLayout)
             textView = v.findViewById(R.id.textView);
+            imageView = v.findViewById(R.id.imageView);
             textView.setOnClickListener(this);
         }
 

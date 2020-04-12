@@ -3,11 +3,18 @@ package com.example.ejercicio_01;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 public class ReceiverDisconnect extends BroadcastReceiver {
+
+    Response responseBattery;
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "CARGADOR DESCONECTADO", Toast.LENGTH_SHORT).show();
+        responseBattery = (ReceiverDisconnect.Response) context;
+        responseBattery.onResponseBatteryDisconnect(false);
+    }
+
+    public interface Response {
+        public void onResponseBatteryDisconnect(boolean battery);
     }
 }
